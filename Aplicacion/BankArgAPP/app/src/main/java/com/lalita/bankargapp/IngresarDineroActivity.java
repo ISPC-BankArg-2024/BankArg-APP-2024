@@ -16,6 +16,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,7 +32,7 @@ public class IngresarDineroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loan);
+        setContentView(R.layout.activity_ingresar_dinero);
 
         /*--- Boton en el tool bar que lleva al perfil---*/
 
@@ -42,16 +45,6 @@ public class IngresarDineroActivity extends AppCompatActivity {
             }
         });
 
-        /*--- Ventana emergente de aviso ---*/
-        Button btnPagar = findViewById(R.id.Transferir);
-        btnPagar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(IngresarDineroActivity.this, "Servicio no disponible en estos momentos", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
         /*--- lleva al home ---*/
         View btnHome = findViewById(R.id.rectangle_2);
         btnHome.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +54,37 @@ public class IngresarDineroActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Referencia al Spinner
+        Spinner miSpinner = findViewById(R.id.miSpinner);
+
+        // Opciones del Spinner
+        String[] opciones = {"Pago Fácil", "Rappi Pago"};
+
+        // Adaptador para el Spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Asigna el adaptador al Spinner
+        miSpinner.setAdapter(adapter);
+
+        // Maneja la selección de una opción
+        miSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                @Override
+                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                    // Obtén la opción seleccionada
+                                                    String seleccion = (String) parent.getItemAtPosition(position);
+
+                                                    // Muestra un mensaje con la opción seleccionada
+                                                    Toast.makeText(IngresarDineroActivity.this, "Seleccionaste: " + seleccion, Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                @Override
+                                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                                }
+                                            });
+
 
         /*---------------------Hooks------------------------*/
         drawerLayout=findViewById(R.id.drawer_layout);
