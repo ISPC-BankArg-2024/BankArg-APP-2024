@@ -31,15 +31,14 @@ import com.lalita.bankargapp.Clases.ContactosAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class AgregarPersonasActivity extends AppCompatActivity {
 
     private EditText editTextCBU;
     //private EditText editTextAlias;
     private EditText nombrePers;
     private Button buttonAddPerson;
-    SQLiteDatabase db;
+
+    UsuariosSQLiteHelper miBase;
 
 
     RecyclerView recyclerViewContactos;
@@ -57,12 +56,8 @@ public class AgregarPersonasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_person);
 
         // Inicializar la base de datos
-
+        miBase = new UsuariosSQLiteHelper(this);
         recyclerViewContactos = findViewById(R.id.recyclerViewContactos);
-
-
-        UsuariosSQLiteHelper dbHelper = new UsuariosSQLiteHelper(this);
-        db = dbHelper.getWritableDatabase();
 
 
         // Recuperar el id_usuario de SharedPreferences
@@ -175,12 +170,10 @@ public class AgregarPersonasActivity extends AppCompatActivity {
 
     // Aca arranca la funcion Para Agregar un contacto
 
-    UsuariosSQLiteHelper dbHelper = new UsuariosSQLiteHelper(this);
-
 
     //reviso si existe un cbu con el mismo numero
     private boolean existeCBU(String contacto) {
-
+        SQLiteDatabase db = miBase.getReadableDatabase();
         String query = "SELECT COUNT(*) FROM Contactos WHERE contacto = ?";
         Cursor cursor = db.rawQuery(query, new String[]{contacto});
 
@@ -255,7 +248,7 @@ public class AgregarPersonasActivity extends AppCompatActivity {
     //Agrego el contacto
 
     private void agregarContacto( int idUsuario, String contacto, String nombre) {
-        boolean insertar = dbHelper.insertarContactos(db, idUsuario, contacto, nombre);
+        boolean insertar = miBase.insertarContactos(idUsuario, contacto, nombre);
         if (insertar) {
             contactoList.add(new Contactos(idUsuario,contacto, nombre));
             contactoAdapter.notifyDataSetChanged();
@@ -272,6 +265,7 @@ public class AgregarPersonasActivity extends AppCompatActivity {
 
     public List<Contactos> getAllContactos() {
         List<Contactos> contactos = new ArrayList<>();
+        SQLiteDatabase db = miBase.getReadableDatabase();
 
         Cursor cursor= db.query(
         "Contactos",new String[]{"id_contacto", "id_usuario", "contacto", "nombre"},null,null,null,null,null);
@@ -302,7 +296,7 @@ public class AgregarPersonasActivity extends AppCompatActivity {
 
         String contactoValor= contacto.getContacto();
         // / Eliminar el contacto usando el valor del contacto
-        boolean eliminado= dbHelper.eliminarPorCBU(contactoValor);
+        boolean eliminado= miBase.eliminarPorCBU(contactoValor);
 
         if (eliminado) {
             // Actualizar la lista y la vista

@@ -183,12 +183,11 @@
                     android:id="@+id/tu_consulta"
                     android:layout_width="350dp"
                     android:layout_height="109dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="30dp"
-                    android:background="?android:attr/fastScrollPreviewBackgroundRight"
-                    android:backgroundTint="@color/col4"
-                    android:hint="Quisiera saber sobre..." />
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Quisiera saber sobre..."/>
 
                 <Button
                     android:id="@+id/Enviar"
@@ -234,8 +233,8 @@
                     android:id="@+id/seleccionar_fecha"
                     android:layout_width="320dp"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="45dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginLeft="45dp"
                     android:backgroundTint="@color/col5"
                     android:onClick="abrirCalendario"
                     android:text="Seleccionar fecha:"
@@ -261,15 +260,15 @@
             <View
                 android:id="@+id/rectangle_2"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="57dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginTop="600dp"
                 android:background="@color/col1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/reservar_turno"
-                app:layout_constraintTop_toBottomOf="@+id/reservar_turno"
                 app:layout_constraintVertical_bias="0.979" />
 
             <TextView

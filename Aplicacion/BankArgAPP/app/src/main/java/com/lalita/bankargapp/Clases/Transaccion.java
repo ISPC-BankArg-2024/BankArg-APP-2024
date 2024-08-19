@@ -1,33 +1,20 @@
 package com.lalita.bankargapp.Clases;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Transaccion {
-    private int idTransaccion;
     private int id_cuenta;
     private int id_tipo_transaccion;
     private float monto;
-    private String fecha_transaccion;
+    private Timestamp fecha_transaccion;
     private String descripcion;
 
-    public Transaccion(int idTransaccion, int idCuenta, int idTipoTransaccion, float monto, String fechaTransaccion, String descripcion) {
-        this.idTransaccion = idTransaccion;
+    public Transaccion(int idCuenta, int idTipoTransaccion, float monto, Timestamp fechaTransaccion, String descripcion) {
         id_cuenta = idCuenta;
         id_tipo_transaccion = idTipoTransaccion;
         this.monto = monto;
         fecha_transaccion = fechaTransaccion;
         this.descripcion = descripcion;
-    }
-
-    public int getIdTransaccion() {
-        return idTransaccion;
-    }
-
-    public void setIdTransaccion(int idTransaccion) {
-        this.idTransaccion = idTransaccion;
     }
 
     public int getId_cuenta() {
@@ -54,23 +41,11 @@ public class Transaccion {
         this.monto = monto;
     }
 
-//    public Timestamp getFecha_transaccion() {
-//        // Convertir la fecha almacenada como String a Timestamp
-//        try {
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            Date parsedDate = dateFormat.parse(fecha_transaccion);
-//            return new Timestamp(parsedDate.getTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-    public String getFecha_transaccion() {
+    public Timestamp getFecha_transaccion() {
         return fecha_transaccion;
     }
 
-    public void setFecha_transaccion(String fecha_transaccion) {
+    public void setFecha_transaccion(Timestamp fecha_transaccion) {
         this.fecha_transaccion = fecha_transaccion;
     }
 

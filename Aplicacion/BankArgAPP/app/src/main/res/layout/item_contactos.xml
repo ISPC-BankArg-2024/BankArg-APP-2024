@@ -15,7 +15,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="@font/poppins"
             android:text="Nombre"
             android:textColor="@color/col1"
             android:textColorHighlight="@color/col1"
@@ -28,23 +27,20 @@
             android:id="@+id/textViewCBU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
             android:text="CBU"
-            android:textColor="@color/col5"
-            android:textColorHighlight="@color/col5"
-            android:textColorHint="@color/col5"
-            android:textColorLink="@color/col5" />
+            android:textColor="@color/col1"
+            android:textColorHighlight="@color/col1"
+            android:textColorHint="@color/col1"
+            android:textColorLink="@color/col1" />
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonEliminarContacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/col1"
-        android:fontFamily="@font/poppins"
         android:text="Eliminar"
-        android:textColor="@color/col2"
-        android:textColorHighlight="@color/col2"
-        android:textColorHint="@color/col2"
-        android:textColorLink="@color/col2" />
+        android:textColor="@color/col6"
+        android:textColorHighlight="@color/col6"
+        android:textColorHint="@color/col6"
+        android:textColorLink="@color/col6" />
 </LinearLayout>

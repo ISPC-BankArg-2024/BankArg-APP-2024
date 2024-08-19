@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,11 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.lalita.bankargapp.Clases.Transaccion;
-import com.lalita.bankargapp.Clases.TransaccionAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BankingActivity extends AppCompatActivity {
 
@@ -37,10 +30,7 @@ public class BankingActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
     TextView saldo;
-    RecyclerView recyclerViewTransacciones;
     SQLiteDatabase db;
-    TransaccionAdapter transaccionAdapter;
-    List<Transaccion> transaccionList;
 
     Button btnTransferencia, btnPagos, btnPerfil, btnLoan;
 
@@ -49,9 +39,6 @@ public class BankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banking);
-
-        recyclerViewTransacciones = findViewById(R.id.recyclerViewTransacciones);
-        recyclerViewTransacciones.setLayoutManager(new LinearLayoutManager(this));
 
         /*--- Boton en el tool bar que lleva al perfil---*/
 
@@ -78,7 +65,6 @@ public class BankingActivity extends AppCompatActivity {
         // Verificar si id_usuario es válido
         if (idUsuario != -1) {
             // Obtener los datos del usuario de la base de datos
-            cargarTransacciones(idUsuario);
             obtenerDatosUsuario(idUsuario);
         } else {
             Toast.makeText(this, "Error: Usuario no logueado", Toast.LENGTH_SHORT).show();
@@ -178,43 +164,6 @@ public class BankingActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void cargarTransacciones(int idUsuario) {
-        List<Transaccion> transaccionList = new ArrayList<>();
-
-        // Consulta para obtener las transacciones del usuario, ordenadas por fecha_transaccion DESC (de más reciente a más antigua)
-        String query = "SELECT t.id_transaccion, t.id_cuenta, t.id_tipo_transaccion, t.monto, t.fecha_transaccion, t.descripcion " +
-                "FROM Transacciones t " +
-                "JOIN Cuentas c ON t.id_cuenta = c.id_cuenta " +
-                "WHERE c.id_usuario = ? " +
-                "ORDER BY t.fecha_transaccion DESC " + // Ordenar por fecha DESC
-                "LIMIT 10"; // Limite 10
-
-
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idUsuario)});
-
-        if (cursor.moveToFirst()) {
-            do {
-                // Recuperar los datos del cursor
-                int idTransaccion = cursor.getInt(0);
-                int idCuenta = cursor.getInt(1);
-                int idTipoTransaccion = cursor.getInt(2);
-                float monto = cursor.getFloat(3);
-                String fechaTransaccion = cursor.getString(4);  // Ahora la fecha es un String
-                String descripcion = cursor.getString(5);
-
-                // Crear un objeto Transaccion con los datos
-                Transaccion transaccion = new Transaccion(idTransaccion, idCuenta, idTipoTransaccion, monto, fechaTransaccion, descripcion);
-                transaccionList.add(transaccion);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        // Configurar el adaptador del RecyclerView
-        transaccionAdapter = new TransaccionAdapter(transaccionList, this); // 'this' es el Context
-        recyclerViewTransacciones.setAdapter(transaccionAdapter);
-    }
-
 
     private void obtenerDatosUsuario(int idUsuario) {
         // Consulta para obtener la información del usuario desde la base de datos
