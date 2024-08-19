@@ -74,6 +74,19 @@
     <string name="sobretran" translatable="false">Nuestro enfoque profesional garantiza que los pagos sean faciles y convenientes, segun las circunstancias.</string>
     <string name="sobre" translatable="false">Nuestra misión en BankArg es brindar un acceso rápido, seguro y conveniente a tus cuentas bancarias. Además de proporcionarte herramientas de gestión para que puedas aprovechar al máximo su potencial. </string>
 
+    <string-array name="tipos_transaccion">
+        <item>Deposito</item> <!-- id_tipo_transaccion 0 -->
+        <item>Retiro</item> <!-- id_tipo_transaccion 1 -->
+        <item>Transferencia</item> <!-- id_tipo_transaccion 2 -->
+        <item>Pago</item> <!-- id_tipo_transaccion 3 -->
+        <item>Compra</item> <!-- id_tipo_transaccion 4 -->
+        <item>Recarga</item> <!-- id_tipo_transaccion 5 -->
+        <item>Devolución</item> <!-- id_tipo_transaccion 6 -->
+        <item>Reembolso</item> <!-- id_tipo_transaccion 7 -->
+        <item>Intereses</item> <!-- id_tipo_transaccion 8 -->
+        <item>Penalización</item> <!-- id_tipo_transaccion 9 -->
+        <!-- Otros tipos -->
+    </string-array>
 </resources>
 
 
