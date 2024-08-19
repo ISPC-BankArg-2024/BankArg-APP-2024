@@ -9,107 +9,58 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.MenuItem;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class BankingActivity extends AppCompatActivity {
+public class IngresarDineroActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
-    TextView saldo;
-    SQLiteDatabase db;
-
-    Button btnTransferencia, btnPagos, btnPerfil, btnLoan;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banking);
+        setContentView(R.layout.activity_loan);
 
         /*--- Boton en el tool bar que lleva al perfil---*/
 
         View btnPerfil = findViewById(R.id.account_cir);
-
         btnPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BankingActivity.this, PerfilActivity.class);
+                Intent intent = new Intent(IngresarDineroActivity.this, PerfilActivity.class);
                 startActivity(intent);
             }
         });
 
-        saldo = findViewById(R.id.saldo);
-
-        // Inicializar la base de datos
-        UsuariosSQLiteHelper dbHelper = new UsuariosSQLiteHelper(this);
-        db = dbHelper.getReadableDatabase();
-
-        // Recuperar id_usuario de SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("user_session", MODE_PRIVATE);
-        int idUsuario = preferences.getInt("id_usuario", -1);
-
-        // Verificar si id_usuario es válido
-        if (idUsuario != -1) {
-            // Obtener los datos del usuario de la base de datos
-            obtenerDatosUsuario(idUsuario);
-        } else {
-            Toast.makeText(this, "Error: Usuario no logueado", Toast.LENGTH_SHORT).show();
-        }
-
-
-        Button btn_transferir = findViewById(R.id.button13);
-        btn_transferir.setOnClickListener(new View.OnClickListener() {
+        /*--- Ventana emergente de aviso ---*/
+        Button btnPagar = findViewById(R.id.Transferir);
+        btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BankingActivity.this, TransferActivity.class);
-                startActivity(intent);
-            }
-        });
+                Toast.makeText(IngresarDineroActivity.this, "Servicio no disponible en estos momentos", Toast.LENGTH_SHORT).show();
 
-        Button btn_pagos = findViewById(R.id.button12);
-        btn_pagos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BankingActivity.this, PagosActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button btn_ingresar = findViewById(R.id.button14);
-        btn_ingresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BankingActivity.this, IngresarDineroActivity.class);
-                startActivity(intent);
             }
         });
 
         /*--- lleva al home ---*/
-        View btnHome = findViewById(R.id.view10);
+        View btnHome = findViewById(R.id.rectangle_2);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BankingActivity.this, ProductActivity.class);
+                Intent intent = new Intent(IngresarDineroActivity.this, ProductActivity.class);
                 startActivity(intent);
             }
         });
-
-
-
 
         /*---------------------Hooks------------------------*/
         drawerLayout=findViewById(R.id.drawer_layout);
@@ -129,7 +80,7 @@ public class BankingActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
-                BankingActivity activity = BankingActivity.this;
+                IngresarDineroActivity activity = IngresarDineroActivity.this;
                 if (itemId == R.id.nav_product) {
                     Intent intent = new Intent(activity, ProductActivity.class);
                     Log.i("MENU_DRAWER_TAG", "Home is selected");
@@ -163,27 +114,6 @@ public class BankingActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    private void obtenerDatosUsuario(int idUsuario) {
-        // Consulta para obtener la información del usuario desde la base de datos
-        String query = "SELECT c.saldo " +
-                "FROM Usuarios2 u " +
-                "LEFT JOIN Cuentas c ON u.id_usuario = c.id_usuario " +
-                "WHERE u.id_usuario = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idUsuario)});
-
-        if (cursor.moveToFirst()) {
-            // Obtener datos del cursor y actualizar las vistas
-            double saldoValue = cursor.getDouble(0);
-
-            // Actualizar los TextView con los datos del usuario
-            saldo.setText("$" + String.format("%.2f", saldoValue));
-        } else {
-            Toast.makeText(this, "No se encontraron datos para el usuario", Toast.LENGTH_SHORT).show();
-        }
-        cursor.close();
     }
 
     @Override

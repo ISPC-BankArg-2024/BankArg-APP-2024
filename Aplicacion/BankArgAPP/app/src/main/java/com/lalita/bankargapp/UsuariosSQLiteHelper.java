@@ -18,7 +18,7 @@ import java.util.List;
 
 public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "BankArgAPP.db";
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 14;
 
     // Definir la estructura de la tabla "user".
     private static final String CREATE_TABLE_USER = "CREATE TABLE if not exists User (" +

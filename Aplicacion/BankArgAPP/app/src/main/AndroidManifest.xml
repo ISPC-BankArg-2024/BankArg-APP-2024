@@ -15,6 +15,9 @@
         android:theme="@style/Theme.BankArgAPP"
         tools:targetApi="31">
         <activity
+            android:name=".IngresarDineroActivity"
+            android:exported="false" />
+        <activity
             android:name=".Web"
             android:exported="false" />
         <activity
