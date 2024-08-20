@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -44,9 +45,10 @@ public class IngresarDineroActivity extends AppCompatActivity {
         dineroIngresarEditText = findViewById(R.id.Dineroingresar);
         ingresarButton = findViewById(R.id.Ingresar);
 
+
         // Inicializar la base de datos
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        db = dbHelper.getWritableDatabase();
+        UsuariosSQLiteHelper dbHelper = new UsuariosSQLiteHelper(this);
+        db = dbHelper.getReadableDatabase();
 
         // Agregar la funcionalidad al botón Ingresar
         ingresarButton.setOnClickListener(new View.OnClickListener() {
@@ -197,10 +199,10 @@ public class IngresarDineroActivity extends AppCompatActivity {
     }
 
     private int obtenerIdUsuarioLogueado() {
-        // Implementa la lógica para obtener el ID del usuario actualmente logueado
-        // Esto puede depender de cómo manejes la autenticación en tu app
-        // Aquí se retorna un ID ficticio para ejemplo
-        return 1;
+        // Recuperar id_usuario de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("user_session", MODE_PRIVATE);
+        int idUsuario = preferences.getInt("id_usuario", -1);
+        return idUsuario;
     }
 
     private double obtenerSaldoActual(int idUsuarioLogueado) {
